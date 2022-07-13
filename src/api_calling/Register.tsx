@@ -1,4 +1,6 @@
+import axios from 'axios'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from './layout/Header'
 
 const Register = () => {
@@ -16,6 +18,8 @@ const Register = () => {
         password:'',
         confirmPassword:''
     })
+
+    const navigate = useNavigate()
     const handleRegister = (e:React.ChangeEvent<HTMLInputElement>) => {
         const {name,value} = e.target
         setReg_data({
@@ -28,23 +32,28 @@ const Register = () => {
         let img:any = e.target.files
         setReg_data({
             ...reg_data,
-            profilePic:img
+            profilePic:img[0]
         })
     }
 
     const RegisterForm = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+       let data = new FormData();
+       data.append('userName',reg_data.userName)
+       data.append('email',reg_data.email)
+       data.append('profilePic',reg_data.profilePic)
+       data.append('password',reg_data.password)
+       data.append('confirmPassword',reg_data.confirmPassword)
 
-        setReg_data({
-            ...reg_data,
-            userName:'',
-            email:'',
-            profilePic:'',
-            password:'',
-            confirmPassword:''
-        })
+        try {
+            const reg = axios.post('http://192.168.1.11:8000/api/user/register',data)
+            console.log(reg);
+            navigate('/login')
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
-    console.log(reg_data);
 
   return (
     <>
@@ -58,7 +67,7 @@ const Register = () => {
             <input type="password" className='form-control text-center mb-4' onChange={handleRegister} name="password" placeholder='Enter Password' />
             <input type="password" className='form-control text-center mb-4' onChange={handleRegister} name="confirmPassword" placeholder='Enter Confirm Password' />
             <div className='App mt-4'>
-              <button type="submit" className='btn btn-success'>User Login</button>
+              <button type="submit" className='btn btn-success'>User Register</button>
             </div>
           </form>
         </div>
