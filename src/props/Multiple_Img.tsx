@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Home from "../basic/Home";
 
 const Multiple_Img = () => {
   const [file, setFile] = useState<any>([]);
@@ -13,10 +14,10 @@ const Multiple_Img = () => {
     console.log("file", file);
   }
 
-  function upload(e:React.MouseEvent<HTMLElement>) {
-    e.preventDefault();
-    console.log(file);
-  }
+  // function upload(e:React.MouseEvent<HTMLElement>) {
+  //   e.preventDefault();
+  //   console.log(file);
+  // }
 
   function deleteFile(id:number) {
     const s = file.filter((item:any, index:number) => index !== id);
@@ -25,39 +26,42 @@ const Multiple_Img = () => {
   }
 
   return (
-    <form>
-      <div className="form-group preview">
-        {file.length > 0 &&
-          file.map((item:string, index:number) => {
-            return (
-              <div key={index} className="text-center">
-                <img src={item} alt="" className="p-3" /><br />
-                <button type="button" className="btn btn-success btn-sm" onClick={(e) => deleteFile(index)}>
-                  delete
-                </button>
-              </div>
-            );
-          })}
-      </div>
+    <>
+      <Home />
+      <form className="mt-5">
+        <div className="form-group preview">
+          {file.length > 0 &&
+            file.map((item:string, index:number) => {
+              return (
+                <div key={index} className="text-center">
+                  <img src={item} alt="" className="p-3" /><br />
+                  <button type="button" className="btn btn-success btn-sm" onClick={(e) => deleteFile(index)}>
+                    delete
+                  </button>
+                </div>
+              );
+            })}
+        </div>
 
-      <div className="form-group">
-        <input
-          type="file"
-          disabled={file.length === 5}
-          className="form-control"
-          onChange={uploadSingleFile}
-          multiple
-        />
-      </div>
-      
-      <button
-        type="button"
-        className="btn btn-primary btn-block"
-        onClick={upload}
-      >
-        Upload
-      </button>
-    </form>
+        <div className="form-group w-25 offset-4">
+          <input
+            type="file"
+            disabled={file.length === 5}
+            className="form-control"
+            onChange={uploadSingleFile}
+            multiple
+          />
+        </div>
+        
+        {/* <button
+          type="button"
+          className="btn btn-primary btn-block"
+          onClick={upload}
+        >
+          Upload
+        </button> */}
+      </form>
+    </>
   );
 };
 

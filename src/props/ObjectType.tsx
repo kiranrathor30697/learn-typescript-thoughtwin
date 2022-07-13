@@ -1,5 +1,6 @@
 import { getMaxListeners } from 'process';
 import React, { useState } from 'react';
+import Home from '../basic/Home';
 import ObjChild from './ObjChild';
 
 interface myInfo {
@@ -21,6 +22,7 @@ const ObjectType= () => {
     })
   return (
     <div>
+      <Home />
       <h1 className='text-center mt-5'>My Data</h1>
       <ObjChild data={data}/>
     </div>
