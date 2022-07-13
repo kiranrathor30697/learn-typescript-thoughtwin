@@ -9,6 +9,7 @@ import Form from './basic/Form';
 import GetFackData from './basic/GetFackData';
 import Sum from './props/Sum';
 import MyComp from './props/MyComp';
+import Multiple_Img from './props/Multiple_Img';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         <Route path='/form' element={<Form />} />
         <Route path='/get_fack_data' element={<GetFackData />} />
         <Route path='/sum' element={<Sum />} />
-        <Route path='/my_comp' element={<MyComp />} />
+        <Route path='/sum' element={<Sum />} />
+        <Route path='/multiple_img' element={<Multiple_Img />} />
       </Routes>
     </BrowserRouter>
   );

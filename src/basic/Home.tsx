@@ -11,6 +11,7 @@ export default function Home() {
         <Link to="/form" className='p-5 text-decoration-none'>Form</Link>
         <Link to="/get_fack_data" className='p-5 text-decoration-none'>Get Fack Data</Link>
         <Link to="/my_comp" className='p-5 text-decoration-none'>MyComp</Link>  
+        <Link to="/multiple_img" className='p-5 text-decoration-none'>Mulple Image</Link>  
       </div>
    </>
   );
