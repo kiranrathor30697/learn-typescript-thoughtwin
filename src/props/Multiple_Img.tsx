@@ -18,8 +18,8 @@ const Multiple_Img = () => {
     console.log(file);
   }
 
-  function deleteFile(e:React.MouseEvent<HTMLElement>) {
-    const s = file.filter((item:any, index:number) => item);
+  function deleteFile(id:number) {
+    const s = file.filter((item:any, index:number) => index !== id);
     setFile(s);
     console.log(s);
   }
@@ -28,13 +28,13 @@ const Multiple_Img = () => {
     <form>
       <div className="form-group preview">
         {file.length > 0 &&
-          file.map((item:any, index:number) => {
+          file.map((item:string, index:number) => {
             return (
-              <div key={item} className="d-flex justify-content-center">
+              <div key={index} className="text-center">
                 <img src={item} alt="" className="p-3" /><br />
-                {/* <button type="button" onClick={() => deleteFile(index)}>
+                <button type="button" className="btn btn-success btn-sm" onClick={(e) => deleteFile(index)}>
                   delete
-                </button> */}
+                </button>
               </div>
             );
           })}
@@ -49,14 +49,7 @@ const Multiple_Img = () => {
           multiple
         />
       </div>
-      {/* {
-        file.map((cv:any,idx:number)=>{
-          console.log('"""""""""""""',cv);
-          return (
-            <img src={cv} key={idx} />
-          )
-        })
-      } */}
+      
       <button
         type="button"
         className="btn btn-primary btn-block"

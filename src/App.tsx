@@ -10,6 +10,7 @@ import GetFackData from './basic/GetFackData';
 import Sum from './props/Sum';
 import MyComp from './props/MyComp';
 import Multiple_Img from './props/Multiple_Img';
+import ObjectType from './props/ObjectType';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/sum' element={<Sum />} />
         <Route path='/sum' element={<Sum />} />
         <Route path='/multiple_img' element={<Multiple_Img />} />
+        <Route path='/object_type' element={<ObjectType />} />
       </Routes>
     </BrowserRouter>
   );
