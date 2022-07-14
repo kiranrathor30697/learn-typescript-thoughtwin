@@ -14,6 +14,7 @@ import ArrayType from './props/ArrayType';
 import Header from './api_calling/layout/Header';
 import Register from './api_calling/Register';
 import Login from './api_calling/Login';
+import Get_Data from './api_calling/Get_Data';
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
 
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/getdata' element={<Get_Data />} />
+        
       </Routes>
     </BrowserRouter>
   );

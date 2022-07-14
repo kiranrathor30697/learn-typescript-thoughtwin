@@ -1,14 +1,42 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from './layout/Header';
 
+interface loginType{
+  userName:string,
+     password:string
+}
 export default function Login() {
 
-    const LoginForm = (e:React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-    }
+  const navigate = useNavigate();
 
-    const handleLogin = () => {
-        //http://192.168.1.11:8000/api/user/login
+   const [login_data,setLoginData] = useState<loginType>({
+     userName:'',
+     password:''
+   })
+
+    const handleLogin = (e:React.ChangeEvent<HTMLInputElement>) => {
+      const {name,value} = e.target;
+      setLoginData({
+        ...login_data,
+        [name]:value
+      })
+    }
+    const LoginForm = async (e:React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();  
+      try {
+        const login = await axios.post('http://192.168.1.11:8000/api/user/login',login_data)
+        
+        console.log(login.data.data.token);
+        
+        localStorage.setItem('token', login.data.data.token)
+        
+        navigate('/getdata')
+
+      } catch (error) {
+        console.log(error);
+      }
     }
   return (
     <>
