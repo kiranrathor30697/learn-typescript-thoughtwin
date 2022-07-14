@@ -60,6 +60,7 @@ const Multiple_Img = () => {
         >
           Upload
         </button> */}
+
       </form>
     </>
   );

@@ -1,23 +1,30 @@
-import { TableCell, TableContainer, TableHead } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, tableContainerClasses, TableHead, TableRow } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import axios from 'axios';
-import { Table, TableBody, TableRow } from 'material-ui';
+// import { Table, TableBody, TableRow } from 'material-ui';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from './layout/Header';
-
-export default function Get_Data() {
-    interface getData{
-         get_data?:Array<Object>
-        mydata?:{
-            data?:any
-        }
-        token?:string
-        Authorization?:string
-        headers?:{
-            Authorization?:string
-        }
-        map?:any
+interface getData{
+    get_data?:{
+        email:string
+        userName:string
+        profilrPic:string
     }
+   mydata?:{
+       data?:any
+   }
+   token?:string
+   Authorization?:string
+   headers?:{
+       Authorization?:string
+   }
+   map?:any
+   setGet_data?:any
+}
+export default function Get_Data() {
+    
+    const navigate = useNavigate();
 
     const [get_data,setGet_data] = useState<getData>()
 
@@ -27,7 +34,7 @@ export default function Get_Data() {
 
         try {
             // debugger
-            const mydata = await axios.get(' http://192.168.1.11:8000/api/user/registeredUser',{
+            const mydata = await axios.get(' http://192.168.1.3:8000/api/user/registeredUser',{
                 headers:{
                     Authorization:token
                 }
@@ -39,55 +46,62 @@ export default function Get_Data() {
             console.log(error);
         }
     }
+
+    const editData = () => {
+        navigate('/editForm')
+    }
       
-    console.log(get_data);
+    // console.log(get_data);
   return (
     <>
       <Header />
-      {
-         // length > 0 ? true : false
-      }
+
+      <div className=''>
+
+        <TableContainer>
+                <Table aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                    <TableCell  align="center"><h5><b>S No</b></h5></TableCell>
+                    <TableCell align="center"><h5><b>User Name</b></h5></TableCell>
+                    <TableCell align="center"><h5><b>Email</b></h5></TableCell>
+                    <TableCell align="center"><h5><b>Profile Pic</b></h5></TableCell>
+                    <TableCell align="center"><h5><b>Profile Update</b></h5></TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        get_data?.map((cv:any,idx:number) => (
+                        <TableRow key={idx}>
+                            <TableCell align="center"><h5>{idx+1}</h5></TableCell>
+                            <TableCell align="center"><h5>{cv.userName}</h5></TableCell>
+                            <TableCell align="center"><h5>{cv.email}</h5></TableCell>
+                            <TableCell align="center"><h5>{
+                            <img 
+                            src={cv.profilePic}
+                            alt="Image not Found"
+                            height={300}
+                            width={300}
+                            />
+                            }</h5></TableCell>
+                            <TableCell align="center">
+                                <h5>
+                                    {
+                                    <button className='btn btn-success btn-sm' onClick={editData}>Edit</button>
+                                    }
+                                </h5>
+                            </TableCell>
+                        </TableRow>
+                        ))
+                    }
+                </TableBody>
+                </Table>
+            </TableContainer>
+           
+      </div>
       <div className='text-center'>
         <button className='btn btn-success' onClick={getData}>Get Data</button>
       </div>
-
-      <div className=''>
-        <table className='container-fluid'>
-            <thead>
-                <tr>
-                    <th className='p-5 border text-center'>Id</th>
-                    <th className='p-5 border text-center'>uaerName</th>
-                    <th className='p-5 border text-center'>Email</th>
-                    <th className='p-5 border text-center'>ProfilePic</th>
-                </tr>
-            </thead>
-            <tbody>
-            {
-                get_data?.map((cv:any,idx:number)=>{
-                    console.log(cv);
-                    return(
-                        <tr key={idx}>
-                            <td className='p-5 border text-center'>{idx+1}</td>
-                            <td className='p-5 border text-center'>{cv.userName}</td>
-                            <td className='p-5 border text-center'>{cv.email}</td>
-                            <td className='p-5 border text-center'>{cv.propfilePic}</td>
-                            <td className='p-5 border text-center'>
-                                <button className='btn btn-success btn-lg'>Edit</button>
-                                <button className='btn btn-danger btn-lg'>Delete</button>
-                            </td>
-                        </tr>
-                    )
-                })
-            }
-            </tbody>
-        </table>
-      </div>
-     
-
-        
-
-      
-    
     </>
   );
 }

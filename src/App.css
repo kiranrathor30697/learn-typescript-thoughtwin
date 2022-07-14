@@ -23,6 +23,14 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.MuiBox-root.css-xn6ruc{
+  border:1px solid rgb(212, 206, 206);
+  margin-top: 50px;
+  padding: 20px;
+}
+.MuiFilledInput-input.MuiInputBase-input.css-10botns-MuiInputBase-input-MuiFilledInput-input{
+  /* border:5px solid red */
+}
 
 .App-link {
   color: #61dafb;

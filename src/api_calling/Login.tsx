@@ -26,11 +26,12 @@ export default function Login() {
     const LoginForm = async (e:React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();  
       try {
-        const login = await axios.post('http://192.168.1.11:8000/api/user/login',login_data)
+        const login = await axios.post('http://192.168.1.3:8000/api/user/login',login_data)
         
-        console.log(login.data.data.token);
+        console.log(login.data.data);
         
         localStorage.setItem('token', login.data.data.token)
+        localStorage.setItem('login_Data', JSON.stringify(login.data.data))
         
         navigate('/getdata')
 

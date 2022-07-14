@@ -46,7 +46,7 @@ const Register = () => {
        data.append('confirmPassword',reg_data.confirmPassword)
 
         try {
-            const reg = axios.post('http://192.168.1.11:8000/api/user/register',data)
+            const reg = axios.post('http://192.168.1.3:8000/api/user/register',data)
             console.log(reg);
             navigate('/login')
             
