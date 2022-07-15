@@ -52,6 +52,10 @@ export default function Get_Data() {
     }
       
     // console.log(get_data);
+    let local_data:any = localStorage.getItem('login_Data')
+    local_data = JSON.parse(local_data)
+    console.log(local_data.userName); 
+
   return (
     <>
       <Header />
@@ -87,7 +91,9 @@ export default function Get_Data() {
                             <TableCell align="center">
                                 <h5>
                                     {
-                                    <button className='btn btn-success btn-sm' onClick={editData}>Edit</button>
+                                        (local_data.userName == cv.userName) ?
+                                        <button className='btn btn-success btn-sm' onClick={editData}>Edit</button>
+                                        :null
                                     }
                                 </h5>
                             </TableCell>

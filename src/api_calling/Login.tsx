@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './layout/Header';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 interface loginType{
   userName:string,
      password:string
@@ -33,7 +34,11 @@ export default function Login() {
         localStorage.setItem('token', login.data.data.token)
         localStorage.setItem('login_Data', JSON.stringify(login.data.data))
         
-        navigate('/getdata')
+        if(localStorage.getItem('token')){
+          navigate('/getdata')
+        }else{
+          toast.error('Please Login')
+        }
 
       } catch (error) {
         console.log(error);
@@ -41,6 +46,7 @@ export default function Login() {
     }
   return (
     <>
+        <ToastContainer />
         <Header />
         <div className='mt-5'>
           <form className='w-25 offset-4 border p-5' onSubmit={LoginForm}>

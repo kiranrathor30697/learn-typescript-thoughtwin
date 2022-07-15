@@ -1,57 +1,30 @@
 import { Avatar, Button, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import axios from 'axios'
-import React, { Component, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import Header from './layout/Header'
 
-// export default class EditData extends Component {
 
-//     state = {
-
-//     }
-    
-//     changeData = (e:React.ChangeEvent<HTMLInputElement>) => {
-//         this.setState(e.target.value)
-//     }
-//   render() {
-//       let data:any = localStorage.getItem('login_Data')
-//       data = JSON.parse(data)
-//     return (
-//       <>
-//         <Header />
-//         <div style={{display:"flex",justifyContent:"center"}}>
-//             <Box
-//                 component="form"
-//                 sx={{
-//                     '& > :not(style)': { m: 1, width: '25ch' },
-//                 }}
-//                 noValidate
-//                 autoComplete="off"
-//                 >
-//                 <TextField type="text" id="outlined-basic" name="email" label="Email" value={data.email} variant="filled" onChange={(e)=>{this.changeData}}  /><br />
-//                 <TextField type="file" id="outlined-basic" label="" variant="filled" /> 
-//                     <Avatar alt="Remy Sharp" sx={{ width:'230px !important', height:'200px'}} src={data.profilePic} />
-//                 <Button variant="contained" color="primary" sx={{marginLeft:"30px !important"}}>
-//                     Edit Data
-//                 </Button> 
-//             </Box>
-//         </div>
-//       </>
-//     )
-//   }
-// }
-
-
-export default function EditData() {
+ const EditData:React.FC = () => {
 
     let data:any = localStorage.getItem('login_Data')
     data = JSON.parse(data)
 
     const [editdata,setEditData] = useState({
-        "email":data.email,
-        "profilePic":data.profilePic
+        "email":'',
+        "profilePic":''
     })
 
+    useEffect(()=>{
+        let local:any = localStorage.getItem('login_Data')
+        local = JSON.parse(local)
+        setEditData({
+            ...editdata,
+            "email":local.email,
+            "profilePic":local.profilePic
+        })
+        
+    },[setEditData])
     const changeData = (e:React.ChangeEvent<HTMLInputElement>) => {
         setEditData({
             ...editdata,
@@ -69,15 +42,24 @@ export default function EditData() {
 
     const updateData = async() => {
         // console.log(editdata);
+        let token:any = localStorage.getItem('token')
+        let data = new FormData();
+       data.append('email',editdata.email)
+       data.append('profilePic',editdata.profilePic)
         try {
-            const updateData = await axios.patch("http://192.168.1.3:8000/api/user/update",editdata,{
+            const updateData:any = await axios.patch("http://192.168.1.3:8000/api/user/update",data,{
                 headers:{
                     'Content-Type': 'multipart/form-data',
-                    Authorization:data.token
+                    Authorization:token
                 }
             })
             console.log(updateData.data);
-            localStorage.getItem(JSON.stringify('login_Data',updateData.data))
+            setEditData({
+                ...editdata,
+                email:updateData.data.email,
+                profilePic:updateData.data.profilrPic
+            })
+            localStorage.setItem('login_Data', JSON.stringify(updateData.data))
         } catch (error) {
             console.log(error);
         }
@@ -97,7 +79,7 @@ export default function EditData() {
                 >
                 <TextField type="text" id="outlined-basic" name="email" label="Email" value={editdata.email} variant="filled" onChange={changeData}  /><br />
                 <TextField type="file" id="outlined-basic" label="" variant="filled" onChange={changeImage} /> 
-                    <Avatar alt="Remy Sharp" sx={{ width:'230px !important', height:'200px'}} src={data.profilePic} />
+                <Avatar alt="Remy Sharp" sx={{ width:'230px !important', height:'200px'}} src={data.profilePic} />
                 <Button variant="contained" color="primary" sx={{marginLeft:"30px !important"}} onClick={updateData}>
                     Edit Data
                 </Button> 
@@ -106,3 +88,4 @@ export default function EditData() {
       </>
   );
 }
+export default EditData
