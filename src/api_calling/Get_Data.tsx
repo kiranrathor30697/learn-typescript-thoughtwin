@@ -25,11 +25,20 @@ interface getData{
 }
 export default function Get_Data() {
     const btn = {
-        marginRight:'20px',
+        marginRight:'20px'
       }
     const navigate = useNavigate();
     const [get_data,setGet_data] = useState<getData>() 
-    const [userdata,setUserData] = useState<any>(false);
+    const [viewuserdata,setViewUserData] = useState<any>();
+
+    const [open, setOpen] = React.useState(false);
+    // const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const handleOpen = (e:any) => {
+        setOpen(true);
+        console.log(e.target.value);
+        setViewUserData(e.target.value)
+    }
 
     const getData = async (e:React.MouseEvent<HTMLButtonElement>) => {
         let token:any = localStorage.getItem('token')
@@ -41,7 +50,7 @@ export default function Get_Data() {
                 }
             })
             setGet_data(mydata.data);
-
+            localStorage.setItem('getuser',JSON.stringify(mydata.data))
             console.log('==========',get_data);
         } catch (error) {
             console.log(error);
@@ -51,9 +60,9 @@ export default function Get_Data() {
     const editData = () => {
         navigate('/editForm')
     }
-    const viewUser = () =>{
-        setUserData(true)
-    }
+    // const viewUser = () =>{
+    //     setUserData(true)
+    // }
 
     // console.log(get_data);
     let local_data:any = localStorage.getItem('login_Data')
@@ -94,7 +103,7 @@ export default function Get_Data() {
                         }</h5></TableCell>
                         <TableCell align="center">
                             <h5>
-                                <Button variant="outlined" onClick={viewUser} sx={btn}>Outlined</Button>
+                                <Button onClick={handleOpen} value={cv.userName }>Open modal</Button>
                                 {
                                 (local_data.userName == cv.userName) ?
                                 <button className='btn btn-success btn-sm' onClick={editData}>Edit</button>
@@ -113,7 +122,7 @@ export default function Get_Data() {
       <div className='text-center'>
         <button className='btn btn-success' onClick={getData}>Get Data</button>
       </div>
-      <Mui_Modal userdata={userdata} />
+      <Mui_Modal open={open} onClose={handleClose} viewuserdata={viewuserdata} get_data={get_data} />
     </>
   );
 }

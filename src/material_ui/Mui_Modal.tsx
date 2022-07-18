@@ -1,62 +1,75 @@
-import { Avatar, Box, Button, Modal, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react';
-import MUI from '../api_calling/layout/MUI';
-// interface modal{
-//   viewData:any
-// }
- const Mui_Modal = (props:any) => {
+import { Avatar, Backdrop, Box, Button, Fade, Modal, Stack, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+interface modal{
+  open:Boolean,
+  onClose:any,
+  get_data:any
+}
+ const Mui_Modal = ({open,onClose,viewuserdata,get_data}:any) => {
 
-  const [open, setOpen] = useState(false);
+  const [userData,setUserData] = useState()
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = React.useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 1000,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    minWidth: 800,
-    height: 350,
-  }; 
+    height:300,
+  };
 
   const btn = {
-    margin:'100px 700px',
+    margin:'100px 700px'
   }
-  const showHideClassName = props?.userdata ? "modal display-block" : "modal display-none";
-  // debugger
+  // console.log(get_data);
+      console.log(viewuserdata);
   return (
     <div>
-        {/* <Button variant="outlined" onClick={handleOpen} sx={btn}>Outlined</Button> */}
-
+       {/* <Button onClick={handleOpen}>Open modal</Button> */}
         <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
         open={open}
-        // userdata={userdata}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        className={showHideClassName}
-        >
-          
-        <Box sx={style} >
-          
-          {/* {props.userdata} */}
-            <Typography id="modal-modal-title" sx={{textAlign:"center"}} variant="h6" component="h2">
-            kiran
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2,textAlign:"center" }}>
-            Rathor
-            </Typography>
-            <Typography sx={{display:"flex",justifyContent:"center", mt:2}}>
-              <Avatar  alt="Remy Sharp" sx={{ width:'200px !important', height:'200px'}} />
-            </Typography>
-        </Box>
-        </Modal>
+        onClose={onClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            {/* {
+              get_data?.map((cv:any,idx:number)=>{
+                // console.log('=================+++++++',cv.email)
+                
+                return(
+                  // if(getuser.userName){
+
+                  // }
+                  <Typography key={idx} id="transition-modal-title" variant="h6" component="h2">
+                  {cv.email}
+                 </Typography>
+                )
+              })
+            } */}
+           <Typography id="transition-modal-title" variant="h6" component="h2">
+                  <h2>User Name:- {viewuserdata}</h2>
+                 </Typography>
+            {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography> */}
+          </Box>
+        </Fade>
+      </Modal>
     </div>
   );
 }
