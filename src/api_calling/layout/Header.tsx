@@ -12,6 +12,7 @@ export default function Header() {
         <Link to="/getdata" className='p-5 text-decoration-none text-light'>Get Data</Link>
         <Link to="/logout" className='p-5 text-decoration-none text-light'>Logout</Link>
         <Link to="/mui" className='p-5 text-decoration-none text-light'>Material UI</Link>
+        <Link to="/country" className='p-5 text-decoration-none text-light'>Country Task</Link>
       </div>
       </>
   );

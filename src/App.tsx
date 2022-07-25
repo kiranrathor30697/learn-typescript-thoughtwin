@@ -18,7 +18,9 @@ import Get_Data from './api_calling/Get_Data';
 import EditData from './api_calling/EditData';
 import Logout from './api_calling/Logout';
 import MUI from './api_calling/layout/MUI';
+import Country_task from './material_ui/Country/Country_task';
 import Mui_Modal from './material_ui/Mui_Modal';
+
 
 function App() {
   return (
@@ -41,6 +43,7 @@ function App() {
         <Route path='/logout' element={<Logout />} />
         <Route path='/modal' element={<Mui_Modal />} />
         <Route path='/mui' element={<MUI />} />
+        <Route path='/country' element={<Country_task />} />
       </Routes>
     </BrowserRouter>
   );
